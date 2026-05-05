@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Chatbox com agendamento</title>
+        <style>
+       </style>
+        <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <div id="chatbox">
+        <div id="mensagem"></div>
+        <input type="text" id="input" placeholder="Digite sua mensagem aqui...">
+        <button id="enviar">enviar</button>
+    </div>
+    <script>
+        let nomeUsuario = prompt("Qual seu nome?");
+        if (!nomeUsuario) nomeUsuario = "Você";
+
+        const input = document.getElementById('input');
+        const mensagem = document.getElementById('mensagem');
+        const enviar = document.getElementById('enviar');
+
+        function respostaBot(msg) {
+            const texto = msg.trim().toLowerCase();
+            if (texto === "ola" || texto === "olá") {
+                return `Olá, ${nomeUsuario}!`;
+            } else if (texto === "tudo bem?" || texto === "tudo bem") {
+                return `Estou bem, obrigado, ${nomeUsuario}! E você?`;
+            } else if (texto === "oi") {
+                return `Oi, ${nomeUsuario}! Como posso ajudar?`;
+            } else {
+                return `Em que posso ajudar, ${nomeUsuario}?`;
+            }
+        }
+
+        enviar.addEventListener('click', () => {
+            if (input.value.trim() !== "") {
+                mensagem.innerHTML += `<div class="user"><b>${nomeUsuario}:</b> ${input.value}</div>`;
+                const userMsg = input.value;
+                setTimeout(() => {
+                    mensagem.innerHTML += `<div class="bot"><b>Bot:</b> ${respostaBot(userMsg)}</div>`;
+                    mensagem.scrollTop = mensagem.scrollHeight;
+                }, 500);
+                input.value = "";
+            }
+        });
+
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                enviar.click();
+            }
+        });
+    </script>
+</body>
+</html>
